@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar } from '@/components/Sidebar';
 import { TasksPage } from '@/pages/TasksPage';
 import { CalendarPage } from '@/pages/CalendarPage';
+import { ContentPage } from '@/pages/ContentPage';
 import { ProjectsPage } from '@/pages/ProjectsPage';
 import { MemoryPage } from '@/pages/MemoryPage';
 import { DocsPage } from '@/pages/DocsPage';
@@ -16,9 +17,10 @@ export default function App() {
         <Sidebar />
         <main className="flex-1 flex flex-col overflow-hidden">
           <Routes>
-            <Route path="/" element={<Navigate to="/team" replace />} />
+            <Route path="/" element={<Navigate to="/content" replace />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/content" element={<ContentPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/memory" element={<MemoryPage />} />
             <Route path="/docs" element={<DocsPage />} />

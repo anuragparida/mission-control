@@ -46,6 +46,17 @@ export interface DailyLog {
   content: string;
 }
 
+export interface Topic {
+  id: string;
+  name: string;
+  score: number; // 0–100
+  trackedWeeks: number; // how many weeks being tracked
+  tags: string[];
+  notes?: string;
+  createdAt: number; // unix ms
+  updatedAt: number; // unix ms
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -79,4 +90,5 @@ export interface Snapshot {
   memory: string;
   usage: Usage;
   projects: Project[];
+  topics: Topic[];
 }

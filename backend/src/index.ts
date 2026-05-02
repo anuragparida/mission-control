@@ -124,6 +124,20 @@ function getUsage() {
   return readJSON(`${OCLIW_BASE}/agents/cost-tracker/usage.json`) ?? {};
 }
 
+function getTopics() {
+  const data = readJSON(`${OCLIW_BASE}/topics.json`);
+  return data?.topics ?? [];
+}
+
+function saveTopics(topics: any[]) {
+  try {
+    require('fs').writeFileSync(`${OCLIW_BASE}/topics.json`, JSON.stringify({ version: 1, topics }, null, 2));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // ─── WebSocket Client Management ───────────────────────────────────────────────
 
 const clients = new Set<WebSocket>();
@@ -150,6 +164,7 @@ function getSnapshot() {
     memory: getMemory(),
     usage: getUsage(),
     projects: getProjects(),
+    topics: getTopics(),
   };
 }
 
@@ -193,6 +208,36 @@ app.get('/api/usage', (_req, res) => {
 
 app.get('/api/blogposts', (_req, res) => {
   res.json(getBlogPosts());
+});
+
+// Topics
+app.get('/api/topics', (_req, res) => {
+  res.json(getTopics());
+});
+
+app.post('/api/topics', (req, res) => {
+  const topics = getTopics();
+  const newTopic = {
+    id: `topic_${Date.now()}`,
+    name: req.body.name ?? 'Untitled',
+    score: Math.min(100, Math.max(0, parseInt(req.body.score) || 50)),
+    trackedWeeks: parseInt(req.body.trackedWeeks) || 1,
+    tags: Array.isArray(req.body.tags) ? req.body.tags : [],
+    notes: req.body.notes ?? '',
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  };
+  topics.push(newTopic);
+  saveTopics(topics);
+  refreshAll();
+  res.status(201).json(newTopic);
+});
+
+app.delete('/api/topics/:id', (req, res) => {
+  const topics = getTopics().filter((t: any) => t.id !== req.params.id);
+  saveTopics(topics);
+  refreshAll();
+  res.json({ ok: true });
 });
 
 // ─── File Watchers ─────────────────────────────────────────────────────────────

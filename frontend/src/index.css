@@ -93,3 +93,57 @@ body {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
+
+/* Input base */
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: #0a0a0f;
+  border: 1px solid #1e1e2e;
+  border-radius: 6px;
+  color: #e8e8f0;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: #c9a84c;
+}
+
+.input::placeholder {
+  color: #6b6b80;
+}
+
+/* Button base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: #c9a84c;
+  color: #0a0a0f;
+}
+
+.btn-primary:hover {
+  background: #d4b55e;
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: #1e1e2e;
+  color: #e8e8f0;
+}
+
+.btn-ghost:hover {
+  background: #12121a;
+}

@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { Calendar, FolderKanban, BookOpen, FileText, Users, MonitorPlay, CheckSquare } from 'lucide-react';
+import { Calendar, FolderKanban, BookOpen, FileText, Users, MonitorPlay, CheckSquare, LayoutGrid } from 'lucide-react';
 import { clsx } from 'clsx';
 
 const navItems = [
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/calendar', icon: Calendar, label: 'Calendar' },
+  { to: '/content', icon: LayoutGrid, label: 'Content' },
   { to: '/projects', icon: FolderKanban, label: 'Projects' },
   { to: '/memory', icon: BookOpen, label: 'Memory' },
   { to: '/docs', icon: FileText, label: 'Docs' },
@@ -21,13 +22,13 @@ export function Sidebar() {
       <div className="px-4 py-5" style={{ borderBottom: '1px solid #1e1e2e' }}>
         <div className="flex items-center gap-2">
           <MonitorPlay size={18} style={{ color: '#c9a84c' }} />
-          <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#e8e8f0' }}>
+          <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#e8e8f0' }}>
             Mission Control
           </span>
         </div>
         <div className="flex items-center gap-1.5 mt-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-400 pulse-dot" />
-          <span className="text-xs" style={{ color: '#6b6b80' }}>System Online</span>
+          <span className="w-1.5 h-1.5 rounded-full pulse-dot" style={{ background: '#3ecf8e' }} />
+          <span className="text-xs font-medium" style={{ color: '#3ecf8e' }}>ODYCLAW ONLINE</span>
         </div>
       </div>
 

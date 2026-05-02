@@ -1,11 +1,13 @@
+import React from 'react';
 import { useSnapshot } from '@/hooks/useWebSocket';
 
 interface HeaderProps {
   title: string;
   subtitle?: string;
+  action?: React.ReactNode;
 }
 
-export function Header({ title, subtitle }: HeaderProps) {
+export function Header({ title, subtitle, action }: HeaderProps) {
   const { connected } = useSnapshot();
 
   return (
@@ -14,14 +16,17 @@ export function Header({ title, subtitle }: HeaderProps) {
         <h1 className="text-lg font-semibold" style={{ color: '#e8e8f0' }}>{title}</h1>
         {subtitle && <p className="text-xs mt-0.5" style={{ color: '#6b6b80' }}>{subtitle}</p>}
       </div>
-      <div className="flex items-center gap-2">
-        <span className="text-xs" style={{ color: '#6b6b80' }}>
-          {connected ? 'LIVE' : 'RECONNECTING'}
-        </span>
-        <span
-          className="w-1.5 h-1.5 rounded-full pulse-dot"
-          style={{ background: connected ? '#3ecf8e' : '#cf3e5c' }}
-        />
+      <div className="flex items-center gap-3">
+        {action}
+        <div className="flex items-center gap-2">
+          <span className="text-xs" style={{ color: '#6b6b80' }}>
+            {connected ? 'LIVE' : 'RECONNECTING'}
+          </span>
+          <span
+            className="w-1.5 h-1.5 rounded-full pulse-dot"
+            style={{ background: connected ? '#3ecf8e' : '#cf3e5c' }}
+          />
+        </div>
       </div>
     </div>
   );
