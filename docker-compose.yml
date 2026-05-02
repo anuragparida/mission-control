@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mission-control-backend
+    ports:
+      - "18792:18792"
+    environment:
+      - PORT=18792
+    volumes:
+      - /home/ody/.openclaw:/home/ody/.openclaw:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:18792/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "18793:18793"
+    environment:
+      - VITE_WS_URL=ws://localhost:18793/ws
+    volumes:
+      - /home/ody/.openclaw:/home/ody/.openclaw:ro
+    restart: unless-stopped
+    depends_on:
+      - backend

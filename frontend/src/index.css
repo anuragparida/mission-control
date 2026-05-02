@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #0a0a0f;
+  --color-obsidian-elevated: #12121a;
+  --color-obsidian-border: #1e1e2e;
+  --color-gold: #c9a84c;
+  --color-violet: #7c5cbf;
+  --color-teal: #3ecfcf;
+  --color-text-primary: #e8e8f0;
+  --color-text-secondary: #6b6b80;
+  --color-status-online: #3ecf8e;
+  --color-status-warning: #c9a84c;
+  --color-status-error: #cf3e5c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #e8e8f0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e1e2e;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2e2e3e;
+}
+
+/* Card base */
+.card {
+  background: #12121a;
+  border: 1px solid #1e1e2e;
+  border-radius: 6px;
+}
+
+.card-accent-gold {
+  border-left: 2px solid #c9a84c;
+}
+
+.card-accent-violet {
+  border-left: 2px solid #7c5cbf;
+}
+
+.card-accent-teal {
+  border-left: 2px solid #3ecfcf;
+}
+
+/* Status pulse animation */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Ticker scroll */
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-scroll {
+  animation: ticker-scroll 30s linear infinite;
+}
+
+/* Pixel sprite base */
+.sprite {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

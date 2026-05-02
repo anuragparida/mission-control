@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head><title>WS Test</title></head>
+<body>
+<h1>WebSocket Debug</h1>
+<div id="log" style="font-family:monospace;font-size:11px;background:#111;color:#0f0;padding:10px;height:400px;overflow:auto;white-space:pre-wrap;word-break:break-all"></div>
+<script>
+const logDiv = document.getElementById('log');
+let msgCount = 0;
+
+function log(msg) {
+  logDiv.textContent += new Date().toISOString() + ' ' + msg + '\n';
+  logDiv.scrollTop = logDiv.scrollHeight;
+}
+
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const wsUrl = protocol + '//' + window.location.host + '/ws';
+log('Connecting to: ' + wsUrl);
+
+const ws = new WebSocket(wsUrl);
+log('Created WS, readyState=' + ws.readyState + ' (0=CONNECTING,1=OPEN,2=CLOSING,3=CLOSED)');
+
+ws.addEventListener('open', () => {
+  log('OPEN event! readyState=' + ws.readyState);
+});
+
+ws.addEventListener('message', (e) => {
+  msgCount++;
+  log('MESSAGE #' + msgCount + ' (data length: ' + e.data.length + ')');
+  try {
+    const d = JSON.parse(e.data);
+    log('  JSON type=' + d.type + ', keys=' + Object.keys(d.payload||{}).join(','));
+  } catch(e2) {
+    log('  non-JSON: ' + String(e.data).slice(0,100));
+  }
+  if (msgCount >= 5) log('  [capped, more may have arrived]');
+});
+
+ws.addEventListener('error', () => {
+  log('ERROR event!');
+});
+
+ws.addEventListener('close', (e) => {
+  log('CLOSE event! code=' + e.code + ', reason=' + (e.reason||'none') + ', wasClean=' + e.wasClean);
+});
+
+// Monitor state over time
+let checkCount = 0;
+const checkInterval = setInterval(() => {
+  checkCount++;
+  log('t+' + checkCount + 's: readyState=' + ws.readyState + ', msgCount=' + msgCount);
+  if (checkCount >= 15) {
+    clearInterval(checkInterval);
+    log('Done. Final: readyState=' + ws.readyState + ', messages=' + msgCount);
+  }
+}, 1000);
+</script>
+</body>
+</html>
